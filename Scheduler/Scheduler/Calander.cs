@@ -24,8 +24,15 @@ namespace Scheduler
             this.calander = calander;
             dataMap = new Dictionary<int, Day>();
 
-            selected = 1; 
-            prevSelected = 1;
+            selected = getCurrentDay();
+            prevSelected = selected;
+        }
+
+        public int getCurrentDay()
+        {
+            DateTime date = DateTime.Now;
+            int day = date.Day;
+            return day;
         }
 
         public Dictionary<int, Day> getDayMap()
@@ -141,7 +148,7 @@ namespace Scheduler
 
             string path = "Files/" + year + "_" + userName + ".txt";
 
-            if (!File.Exists(path)) return -1;
+            if (!File.Exists(path)) path = "Files/" + year + ".txt";
 
             System.IO.StreamReader file = new System.IO.StreamReader(path);
             while ((line = file.ReadLine()) != null)
@@ -149,7 +156,7 @@ namespace Scheduler
      
                 //line = ReadLine()System.Console.WriteLine(line);     // read line
 
-                curr.addMonth(monthCount, line);    // add month to year list
+                curr.addMonth(monthCount, line);    // add mnth to year list
 
                 //System.Console.WriteLine(line);     // read next line
                 //System.Console.WriteLine(line);     // read next line
