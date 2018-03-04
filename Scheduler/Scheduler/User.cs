@@ -12,6 +12,8 @@ namespace Scheduler
         private String name;
         private String lastName;
 
+        public User() { } 
+
         public User(String userName)
         {
             this.userName = userName;
@@ -20,6 +22,11 @@ namespace Scheduler
         public string getUserName()
         {
             return userName;
+        }
+
+        public void setUsername(string username)
+        {
+            userName = username;
         }
     }
 }
