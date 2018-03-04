@@ -17,6 +17,7 @@ namespace Scheduler
 
         public int selected;
         public int prevSelected;
+        public int curMonth;
         
         
         public Calander(PictureBox calander)
@@ -26,6 +27,7 @@ namespace Scheduler
 
             selected = getCurrentDay();
             prevSelected = selected;
+            curMonth = getCurrentMonth();
         }
 
         public int getCurrentDay()
@@ -33,6 +35,13 @@ namespace Scheduler
             DateTime date = DateTime.Now;
             int day = date.Day;
             return day;
+        }
+
+        public int getCurrentMonth()
+        {
+            DateTime date = DateTime.Now;
+            int month = date.Month;
+            return month;
         }
 
         public Dictionary<int, Day> getDayMap()
@@ -191,7 +200,7 @@ namespace Scheduler
                         case 6:
                             dayName = "Saturday";
                             break;
-                        case 7:
+                        case 0:
                             dayName = "Sunday";
                             break;
                         default:

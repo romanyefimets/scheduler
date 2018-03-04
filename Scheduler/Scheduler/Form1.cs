@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 
 namespace Scheduler
@@ -31,6 +32,8 @@ namespace Scheduler
         public static Dictionary<int, PictureBox> picMap;
         public static Dictionary<String,int> dayNameMap;
 
+        public static Year year;
+
 
 
         public Form1(User user)
@@ -40,16 +43,15 @@ namespace Scheduler
             dayNameMap = new Dictionary<String, int>();
             initDayNameMap();
 
-            Year year = new Year(2018); // will need to change this later
+
+            year = new Year(2018); // will need to change this later
 
             scheduler.loadCalender(year, user);
 
             picMap = new Dictionary<int, PictureBox>();
             createPicMap();
-            populate(year.getMonth(2)); // change this to current date
+            populate(year.getMonth(scheduler.curMonth - 1)); // change this to current date
 
-           // scheduler.selected = 
-           
         }
 
         public void initDayNameMap()
@@ -104,13 +106,44 @@ namespace Scheduler
             picMap.Add(33, pictureBox34);
             picMap.Add(34, pictureBox35);
             picMap.Add(35, pictureBox36);
+            picMap.Add(36, pictureBox45);
+
+            picMap.Add(37, pictureBox46);
 
 
 
         }
 
+        private void showNextMonth(int direction)
+        {
+            scheduler.curMonth += direction;
+            if (scheduler.curMonth > 11) scheduler.curMonth = 0;
+            if (scheduler.curMonth < 0) scheduler.curMonth = 11;
+
+            clearCalander();
+            scheduler.getDayMap().Clear();
+            scheduler.selected = 10;
+            scheduler.selected = 10;
+            populate(year.getMonth(scheduler.curMonth));
+            //scheduler.selected = 
+        }
+
+        public void clearCalander()
+        {
+            Dictionary<int, Day> dic = scheduler.getDayMap();
+            foreach (KeyValuePair<int, Day> pair in dic)
+            {
+                int dayNum = pair.Key;
+                Day day = pair.Value;
+                writeDayName(day.getColorBox(), "");
+                unHighLight(dayNum);
+               
+            }
+        }
         public void populate(Month m)
         {
+            writeTitle(pictureBox44, m.getName());
+
             string firstDay = m.getDay(0).getDay();
             int startDay = dayNameMap[firstDay];
 
@@ -136,8 +169,10 @@ namespace Scheduler
                     currentDay = pair.Key;
                 }
             }
+            scheduler.prevSelected = scheduler.selected;
             scheduler.selected = currentDay;
-            scheduler.selected = currentDay;
+
+            //unHighLight(scheduler.prevSelected);
             highLight(currentDay);
         }
 
@@ -168,12 +203,29 @@ namespace Scheduler
 
         public void writeDayName(PictureBox picBox, String name)
         {
+            Font font = new Font("TimesNewRoman", 18, FontStyle.Regular, GraphicsUnit.Pixel);
+            Point p = new Point(0, 0);
+            drawText(picBox, name, font, p);
+        }
+
+
+        public void writeTitle(PictureBox picBox, String name)
+        {
+            Font font = new Font("TimesNewRoman", 30, FontStyle.Regular, GraphicsUnit.Pixel);
+            int halfX = picBox.Location.X / 2 - name.Count();
+
+            Point p = new Point(halfX, 0);
+            drawText(picBox, name, font, p);
+        }
+
+        public void drawText(PictureBox picBox, String name, Font f, Point p)
+        {
             Image image = new Bitmap(picBox.Width, picBox.Height);
             Graphics g = Graphics.FromImage(image);
-            Font font = new Font("TimesNewRoman", 20, FontStyle.Bold, GraphicsUnit.Pixel);
-            g.DrawString(name, font, Brushes.Black, new Point(0, 0));
+            g.DrawString(name, f, Brushes.Black, p);
             picBox.Image = image;
         }
+
 
         public void writeDayNum(int boxNumber)
         {
@@ -380,6 +432,30 @@ namespace Scheduler
         {
             singleClick(sender, e, 35);
         }
+
+
+        private void pictureBox45_Click(object sender, EventArgs e)
+        {
+            singleClick(sender, e, 36);
+        }
+
+
+        private void pictureBox46_Click(object sender, EventArgs e)
+        {
+            singleClick(sender, e, 37);
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            showNextMonth(1);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            showNextMonth(-1);
+        }
+
     }
 }
 
