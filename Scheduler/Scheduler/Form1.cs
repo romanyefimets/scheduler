@@ -33,7 +33,7 @@ namespace Scheduler
 
 
 
-        public Form1()
+        public Form1(User user)
         {
             InitializeComponent();
             scheduler = new Calander(pictureBox1);
@@ -41,7 +41,7 @@ namespace Scheduler
             initDayNameMap();
 
             Year year = new Year(2018); // will need to change this later
-            User user = new User("ChodeMaster");
+            //User user = new User("ChodeMaster");
 
             scheduler.loadCalender(year, user);
 
@@ -176,12 +176,12 @@ namespace Scheduler
 
         public void highLight(int boxNumber)
         {
-            scheduler.getDay(boxNumber).setBoxColor(HIGHLIGHT);
+            //scheduler.getDay(boxNumber).setBoxColor(HIGHLIGHT);
         }
 
         public void unHighLight(int boxNumber)
         {
-            scheduler.getDay(boxNumber).setBoxColor(NORMAL);
+            //scheduler.getDay(boxNumber).setBoxColor(NORMAL);
 
         }
 
@@ -359,6 +359,11 @@ namespace Scheduler
         private void pictureBox36_Click(object sender, EventArgs e)
         {
             singleClick(sender, e, 35);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

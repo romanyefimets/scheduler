@@ -11,15 +11,21 @@ namespace Scheduler
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        public static AccountManagement help = new AccountManagement();
+        public static User user = new User();
         [STAThread]
-
 
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new Form1());
+            help.LoadFromFile();
+
+            //Application.Run(new Form1());
+            Application.Run(new Login());
+
+            
         }
     }
 }
