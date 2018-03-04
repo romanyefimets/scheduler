@@ -33,6 +33,10 @@ public class Day
     private bool[] available = new bool[48];    // store available times
     List<Event> events = new List<Event>();     // List to store events for this day
 
+    public Day ()
+    {
+        for(int i = 0; i < 48; i++) { available[i] = true; }    // make all values true
+    }
     public string getDay() { return day; }              // get day name 
     public void setDay(string day2) { day = day2; }     // set day name
 
@@ -92,8 +96,12 @@ public class Day
 // Stores information about a month
 public class Month
 {
+    private int monthNumber;                // stores the month number 
     private string monthName;               // stores the month (ex. January)
     List<Day> days = new List<Day>();       // List to store days in the month
+
+    public int getNumber() { return monthNumber; }              // get month number
+    public void setNumber(int number) { monthNumber = number; } // set month number
 
     public string getName() { return monthName; }               // get month name
     public void setName(string name) { monthName = name; }      // set month name
@@ -103,6 +111,15 @@ public class Month
    
     public int getDayRange()
     { return days.Count; }                  // get day list lenght
+
+    // create a day instance and put it into day list
+    public void addDay(int number, string name)
+    {
+        Day insert = new Day();
+        insert.setDay(name);
+        insert.setNumber(number);
+        days.Add(insert);
+    }
 }
 
 // Stores information about a year
@@ -114,6 +131,15 @@ public class Year
     public int getYear() { return year; }               // get year
     public void setYear(int year2) { year = year2; }    // set year
     
+    // create a month instance and input into the list
+    public void addMonth(int number, string name)
+    {
+        Month insert = new Month();
+        insert.setName(name);
+        insert.setNumber(number);
+        months.Add(insert);
+    }
+
     public Month getMonth(int month)        // gets month 
     { return months[month]; }               // return current month
 
@@ -131,15 +157,15 @@ public class TestClass
     //      end time of event
     //      name of event
 
-    public void addEvent(int month, int day, double start, double end, string name)
+    public void addEvent(int month, int day, double start, double end, string name, Year curr)
     {
-        Year curr = new Year();
+        //Year curr = new Year();
 
         // event time is available, can input event
-        if (curr.getMonth(month).getDay(day).checkAvailability(start, end)) 
+        if (curr.getMonth(month-1).getDay(day-1).checkAvailability(start, end)) 
         {
-            curr.getMonth(month).getDay(day).setAvailability(start, end);   // set availability array
-            curr.getMonth(month).getDay(day).setEvent(name, start, end);    // set event
+            curr.getMonth(month-1).getDay(day-1).setAvailability(start, end);   // set availability array
+            curr.getMonth(month-1).getDay(day-1).setEvent(name, start, end);    // set event
         }
         else
         {
@@ -177,6 +203,69 @@ public class TestClass
         return curr.getMonth(month).getDay(day).getEvents();
     }
 
+    // load in the names of months 
+    public void loadCalender(Year curr)
+    {
+        string line;
+        int monthCount = 1;
+        //Year curr = new Year();
+        //curr.setYear(2018);
+
+        System.IO.StreamReader file = new System.IO.StreamReader("C:/Users/Boggie/Desktop/2018.txt");
+        while ((line = file.ReadLine()) != null)
+        {
+            //line = ReadLine()System.Console.WriteLine(line);     // read line
+
+            curr.addMonth(monthCount, line);    // add month to year list
+
+            //System.Console.WriteLine(line);     // read next line
+            //System.Console.WriteLine(line);     // read next line
+            line = file.ReadLine();
+            int numberOfDays = Int32.Parse(line);   // turn string to int
+
+            //System.Console.WriteLine(line);     // rad next line
+            line = file.ReadLine();
+            int startDay = Int32.Parse(line);       // turn string to int
+
+            string dayName="";
+
+            for(int i = 1; i <= numberOfDays; i++)      // loop all days of month
+            {
+                switch (startDay % 7)
+                {
+                    case 1:
+                        dayName = "Monday";
+                        break;
+                    case 2:
+                        dayName = "Tuesday";
+                        break;
+                    case 3:
+                        dayName = "Wednesday";
+                        break;
+                    case 4:
+                        dayName = "Thursday";
+                        break;
+                    case 5:
+                        dayName = "Friday";
+                        break;
+                    case 6:
+                        dayName = "Saturday";
+                        break;
+                    case 7:
+                        dayName = "Sunday";
+                        break;
+                    default:
+                        Console.Write("ERROR.../n");
+                        break;
+                }
+                // add a day to a month 
+                curr.getMonth(monthCount-1).addDay(i, dayName);
+                startDay++; 
+            }
+            monthCount++;
+        }
+        file.Close();
+    }
     /*
     // find all events that are in the hour period
     public Event findEvent_byHour(double start, double end)
@@ -185,4 +274,7 @@ public class TestClass
         return null;
     }
     */
+
 }
+
+
