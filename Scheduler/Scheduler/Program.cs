@@ -13,6 +13,7 @@ namespace Scheduler
         /// </summary>
         public static AccountManagement help = new AccountManagement();
         public static User user = new User();
+
         [STAThread]
 
         static void Main()

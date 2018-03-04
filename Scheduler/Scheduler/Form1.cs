@@ -41,14 +41,14 @@ namespace Scheduler
             initDayNameMap();
 
             Year year = new Year(2018); // will need to change this later
-            //User user = new User("ChodeMaster");
 
             scheduler.loadCalender(year, user);
 
             picMap = new Dictionary<int, PictureBox>();
             createPicMap();
             populate(year.getMonth(2)); // change this to current date
-            highLight(1); // highlight current date
+
+           // scheduler.selected = 
            
         }
 
@@ -113,15 +113,32 @@ namespace Scheduler
         {
             string firstDay = m.getDay(0).getDay();
             int startDay = dayNameMap[firstDay];
-            for (int i = startDay; i < m.getDayRange(); i++)
+
+            for (int i = 1; i <= m.getDayRange(); i++)
             {
+                int startNum = startDay + i - 1;
                 Day day = new Day(i);
-                scheduler.addDayMap(i, day);
-                scheduler.getDay(i).setColorBox(picMap[i]);
-                int dayNum = scheduler.getDay(i).getNumber();
-                writeDayNum(dayNum);
+                
+                scheduler.addDayMap(startNum, day);
+                scheduler.getDay(startNum).setColorBox(picMap[startNum]);
+                writeDayNum(startNum);
                 writeDayName();
             }
+
+            int currentDay = scheduler.selected;
+            Dictionary<int, Day> dic = scheduler.getDayMap();
+
+            foreach (KeyValuePair<int, Day> pair in dic)
+            {
+                Day day = pair.Value;
+                if (day.getNumber() == scheduler.selected)
+                {
+                    currentDay = pair.Key;
+                }
+            }
+            scheduler.selected = currentDay;
+            scheduler.selected = currentDay;
+            highLight(currentDay);
         }
 
         private void singleClick(object sender, EventArgs e, int boxNumber)
@@ -162,26 +179,29 @@ namespace Scheduler
         {
 
             Day day = scheduler.getDay(boxNumber);
-            PictureBox picBox = day.getColorBox();
+            if (day != null)
+            {
+                PictureBox picBox = day.getColorBox();
 
 
 
-            Image image = new Bitmap(picBox.Width, picBox.Height);
-            Graphics g = Graphics.FromImage(image);
-            Font font = new Font("TimesNewRoman", 20, FontStyle.Bold, GraphicsUnit.Pixel);
-            g.DrawString(day.getNumber().ToString(), font, Brushes.Black, new Point(0, 0));
-            picBox.Image = image;
+                Image image = new Bitmap(picBox.Width, picBox.Height);
+                Graphics g = Graphics.FromImage(image);
+                Font font = new Font("TimesNewRoman", 20, FontStyle.Bold, GraphicsUnit.Pixel);
+                g.DrawString(day.getNumber().ToString(), font, Brushes.Black, new Point(0, 0));
+                picBox.Image = image;
+            }
         
         }
 
         public void highLight(int boxNumber)
         {
-            //scheduler.getDay(boxNumber).setBoxColor(HIGHLIGHT);
+            scheduler.getDay(boxNumber).setBoxColor(HIGHLIGHT);
         }
 
         public void unHighLight(int boxNumber)
         {
-            //scheduler.getDay(boxNumber).setBoxColor(NORMAL);
+            scheduler.getDay(boxNumber).setBoxColor(NORMAL);
 
         }
 
@@ -359,11 +379,6 @@ namespace Scheduler
         private void pictureBox36_Click(object sender, EventArgs e)
         {
             singleClick(sender, e, 35);
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

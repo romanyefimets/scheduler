@@ -11,8 +11,9 @@ namespace Scheduler
     class AccountManagement
     {
         private Dictionary<string, string> login = new Dictionary<string, string>();
-        private string path = "C:/Users/Boggie/Desktop/scheduler/Scheduler/Scheduler/bin/Debug/Files/Logins.txt";
 
+
+        string path = "Files/Logins.txt";
         // Loads all the usernames and passwords into a dictionary
         public void LoadFromFile()
         {
