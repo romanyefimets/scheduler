@@ -34,7 +34,10 @@ namespace Scheduler
 
         public static Year year;
 
-
+        public Year getYear()
+        {
+            return year;
+        }
 
         public Form1(User user)
         {
@@ -52,6 +55,11 @@ namespace Scheduler
             createPicMap();
             populate(year.getMonth(scheduler.curMonth - 1)); // change this to current date
 
+        }
+
+        public Calander getCalender()
+        {
+            return scheduler;
         }
 
         public void initDayNameMap()
@@ -456,6 +464,196 @@ namespace Scheduler
             showNextMonth(-1);
         }
 
+        private void doubleClick(object sender, EventArgs e, int boxNumber)
+        {
+            if (scheduler.getDay(boxNumber) != null)
+            {
+                DayForm dayForm;
+                dayForm = new DayForm(this);
+                dayForm.Show();
+
+            }
+        }
+
+        private void pictureBox2_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 1);
+        }
+
+        private void pictureBox3_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 2);
+        }
+
+        private void pictureBox4_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 3);
+        }
+
+        private void pictureBox5_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 4);
+        }
+
+        private void pictureBox6_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 5);
+        }
+
+        private void pictureBox7_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 6);
+        }
+
+        private void pictureBox8_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 7);
+        }
+
+        private void pictureBox9_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 8);
+        }
+
+        private void pictureBox10_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 9);
+        }
+
+        private void pictureBox11_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 10);
+        }
+
+        private void pictureBox12_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 11);
+        }
+
+        private void pictureBox13_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 12);
+        }
+
+        private void pictureBox14_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 13);
+        }
+
+        private void pictureBox15_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 14);
+        }
+
+        private void pictureBox16_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 15);
+        }
+
+        private void pictureBox17_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 16);
+        }
+
+        private void pictureBox18_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 17);
+        }
+
+        private void pictureBox19_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 18);
+        }
+
+        private void pictureBox20_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 19);
+        }
+
+        private void pictureBox21_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 20);
+        }
+
+        private void pictureBox22_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 21);
+        }
+
+        private void pictureBox23_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 22);
+        }
+
+        private void pictureBox24_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 23);
+        }
+
+        private void pictureBox25_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 24);
+        }
+
+        private void pictureBox26_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 25);
+        }
+
+        private void pictureBox27_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 26);
+        }
+
+        private void pictureBox28_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 27);
+        }
+
+        private void pictureBox29_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 28);
+        }
+
+        private void pictureBox30_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 29);
+        }
+
+        private void pictureBox31_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 30);
+        }
+
+        private void pictureBox32_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 31);
+        }
+
+        private void pictureBox33_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 32);
+        }
+
+        private void pictureBox34_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 33);
+        }
+
+        private void pictureBox35_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 34);
+        }
+
+        private void pictureBox36_DoubleClick(object sender, EventArgs e)
+        {
+            doubleClick(sender, e, 35);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 
