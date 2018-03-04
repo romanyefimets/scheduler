@@ -81,5 +81,15 @@ namespace Scheduler
                 textBox6.Clear();
             }
         }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+            textBox5.PasswordChar = ('*');
+        }
+
+        private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+            textBox6.PasswordChar = ('*');
+        }
     }
 }

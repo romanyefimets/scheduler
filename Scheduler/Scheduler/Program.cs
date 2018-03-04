@@ -23,9 +23,9 @@ namespace Scheduler
 
             help.LoadFromFile();
 
-            User user = new User("romashka");
-            Application.Run(new Form1(user));
-            //Application.Run(new Login());
+            user = new User("romashka");
+            //Application.Run(new Form1(user));
+            Application.Run(new Login());
 
             
         }
