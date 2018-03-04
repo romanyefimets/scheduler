@@ -1,0 +1,16 @@
+SaveFileDialog saveFileDialog1 = new SaveFileDialog();      // Uses SaveFileDialog Class
+
+            saveFileDialog1.Filter = "Text Files (.txt) |*.txt";        // Can only be saved as .txt files
+            saveFileDialog1.FilterIndex = 1;
+            saveFileDialog1.RestoreDirectory = true;
+
+            StringBuilder sBuilder = new StringBuilder();       
+          
+            if(saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                sBuilder.Append(textBox1.Text);                  // Uses stringbuilder to copy contents in application to stringbuilder
+                TextWriter textWriter = new StreamWriter(saveFileDialog1.FileName);   // Uses textwriter to write stringbuilder to file
+                textWriter.Write(sBuilder.ToString());
+                textWriter.Flush();                 // Flush and close textwriter
+                textWriter.Close();
+            }
