@@ -19,9 +19,17 @@ namespace Scheduler
         public static Color NORMAL = Color.White;
 
         public static int NUM_DAYS = 31;
+        public static int SUN = 1;
+        public static int MON = 2;
+        public static int TUE = 3;
+        public static int WED = 4;
+        public static int THU = 5;
+        public static int FRI = 6;
+        public static int SAT = 7;
 
         public static Calander scheduler;
         public static Dictionary<int, PictureBox> picMap;
+        public static Dictionary<String,int> dayNameMap;
 
 
 
@@ -29,11 +37,30 @@ namespace Scheduler
         {
             InitializeComponent();
             scheduler = new Calander(pictureBox1);
+            dayNameMap = new Dictionary<String, int>();
+            initDayNameMap();
+
+            Year year = new Year(2018); // will need to change this later
+            User user = new User("ChodeMaster");
+
+            scheduler.loadCalender(year, user);
+
             picMap = new Dictionary<int, PictureBox>();
             createPicMap();
-            populate();
+            populate(year.getMonth(2)); // change this to current date
             highLight(1); // highlight current date
            
+        }
+
+        public void initDayNameMap()
+        {
+            dayNameMap.Add("Sunday", SUN);
+            dayNameMap.Add("Monday",MON);
+            dayNameMap.Add("Tuesday",TUE);
+            dayNameMap.Add("Wednesday",WED);
+            dayNameMap.Add("Thursday",THU);
+            dayNameMap.Add("Friday", FRI);
+            dayNameMap.Add("Saturday", SAT);
         }
 
         public void createPicMap()
@@ -82,9 +109,11 @@ namespace Scheduler
 
         }
 
-        public void populate()
+        public void populate(Month m)
         {
-            for (int i = 1; i < NUM_DAYS; i++)
+            string firstDay = m.getDay(0).getDay();
+            int startDay = dayNameMap[firstDay];
+            for (int i = startDay; i < m.getDayRange(); i++)
             {
                 Day day = new Day(i);
                 scheduler.addDayMap(i, day);
@@ -109,6 +138,7 @@ namespace Scheduler
         }
         public void writeDayName()
         {
+
 
             writeDayName(pictureBox37, "Sunday");
             writeDayName(pictureBox38, "Monday");
@@ -168,6 +198,7 @@ namespace Scheduler
         private void pictureBox4_Click(object sender, EventArgs e)
         {
             singleClick(sender, e, 3);
+
         }
 
         private void pictureBox5_Click(object sender, EventArgs e)
