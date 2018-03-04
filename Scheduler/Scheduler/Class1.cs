@@ -28,21 +28,31 @@ public class Event
 // Stores information about a day 
 public class Day
 {
-    private string day { get; set; }        // stores the day (ex. Monday)
-    private int dayNumber { get; set; }     // stores the day number in the month (ex. 13)
+    private string day;                         // stores the day (ex. Monday)
+    private int dayNumber;                      // stores the day number in the month (ex. 13)
     private bool[] available = new bool[48];    // store available times
+    List<Event> events = new List<Event>();     // List to store events for this day
 
-    // List to store events for this day
-    List<Event> events = new List<Event>();
+    public string getDay() { return day; }              // get day name 
+    public void setDay(string day2) { day = day2; }     // set day name
 
-    // retrieves events
-    public Event getEvent(string name)     
+    public int getNumber() { return dayNumber; }                // get day number
+    public void setNumber(int number) { dayNumber = number; }   // set day number   
+
+    // retrieves list of events
+    public List<Event> getEvents() { return events; }
+
+    // find all events with a name
+    public List<Event> findEvent(string name)
     {
-        for(int i = 0; i < events.Count; i++)
+        List<Event> tempEvent = new List<Event>();      // temporary store events
+
+        for(int i=0; i < events.Count; i++)
         {
-            if(events[i].getName() == name) { return events[i]; }   // event found
+            // add all events with this name to the list
+            if(events[i].getName() == name) { tempEvent.Add(events[i]); }
         }
-        return null;                        // no event found
+        return tempEvent;                               // return list of events 
     }
 
     // sets events
@@ -82,29 +92,33 @@ public class Day
 // Stores information about a month
 public class Month
 {
-    private string monthName { get; set; }      // stores the month (ex. January)
+    private string monthName;               // stores the month (ex. January)
+    List<Day> days = new List<Day>();       // List to store days in the month
 
-    // List to store days in the month
-    List<Day> days = new List<Day>();   
+    public string getName() { return monthName; }               // get month name
+    public void setName(string name) { monthName = name; }      // set month name
 
     public Day getDay(int day)              // gets day 
-    {
-        return days[day];                   // return current day
-    }
+    { return days[day]; }                   // return current day
+   
+    public int getDayRange()
+    { return days.Count; }                  // get day list lenght
 }
 
 // Stores information about a year
 public class Year
 {
-    private int year { get; set; }          // stores the year (ex. 2018)
+    private int year;                       // stores the year (ex. 2018)
+    List<Month> months = new List<Month>(); // List to store month in a year 
 
-    // List to store month in a year 
-    List<Month> months = new List<Month>();
-
+    public int getYear() { return year; }               // get year
+    public void setYear(int year2) { year = year2; }    // set year
+    
     public Month getMonth(int month)        // gets month 
-    {
-        return months[month];               // return current month
-    }
+    { return months[month]; }               // return current month
+
+    public int getMonthRange()
+    { return months.Count; }                // get month list lenght
 }
 
 public class TestClass
@@ -134,21 +148,41 @@ public class TestClass
         }
     }
 
-    public Event findEvent_byName(string eventName)
+    // find all events with a certain name
+    public List<Event> findEvent_byName(string eventName)
     {
-        
-        return null;
+        Year curr = new Year();
+        List<Event> allEvents = new List<Event>();
+
+        // iterate through months 
+        for(int i = 0; i < curr.getMonthRange(); i++)
+        {
+            // iterate through days of the month
+            for(int j = 0; j < curr.getMonth(i).getDayRange(); j++)
+            {
+                // add list of events to final list
+                allEvents.AddRange(curr.getMonth(i).getDay(j).findEvent(eventName));
+            }
+        }
+        return allEvents;
     }
 
-    public Event findEvent_byDate(int year, int month, int day)
+    // find all events in a certain date
+    public List<Event> findEvent_byDate(int year, int month, int day)
     {
+        Year curr = new Year();
+        //List<Event> allEvents = new List<Event>();
 
-        return null;
+        // return a list of events 
+        return curr.getMonth(month).getDay(day).getEvents();
     }
 
+    /*
+    // find all events that are in the hour period
     public Event findEvent_byHour(double start, double end)
     {
 
         return null;
     }
+    */
 }
